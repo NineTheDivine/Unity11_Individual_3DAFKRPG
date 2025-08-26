@@ -25,6 +25,7 @@ public class Player : Entity
 
     protected override void Start()
     {
+        UpdateStatusByLevel();
         base.Start();
         this.mana.Init();
         this.experience.Init();
@@ -43,6 +44,11 @@ public class Player : Entity
     public void LevelUp()
     {
         level++;
+        UpdateStatusByLevel();
+    }
+
+    public void UpdateStatusByLevel()
+    {
         health.UpdateMaxValue(health.originalValue + (int)(health.originalValue * 0.1f * (level - 1)));
         mana.UpdateMaxValue(mana.originalValue + (int)(mana.originalValue * 0.05f * (level - 1)));
         experience.UpdateMaxValue(experience.originalValue + (int)(experience.originalValue * (level - 1) * (level - 1)));

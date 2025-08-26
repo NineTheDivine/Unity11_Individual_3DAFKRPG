@@ -54,8 +54,7 @@ public class Status: ScriptableObject
             EventActions[i](curValue, maxValue);
     }
 
-
-    private void OnDestroy()
+    public void ResetStatus()
     {
         maxValue = originalValue;
         curValue = 0;

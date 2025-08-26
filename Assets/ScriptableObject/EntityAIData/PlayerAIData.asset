@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerAIData
   m_EditorClassIdentifier: 
   moveAmount: 5
-  detectRadius: 1.5
+  detectRadius: 3
   attackDelay: 1
   lastAttackTime: 0
   initialState: 1

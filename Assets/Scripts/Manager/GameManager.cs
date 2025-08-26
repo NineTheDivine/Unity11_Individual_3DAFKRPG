@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
         else if(_instance != this)
             Destroy(gameObject);
         //Try Load Battle Manager, if not, make one
+        if(saveManager == null)
+            saveManager = new GameObject("SaveManager").AddComponent<SaveManager>();
+
+
         if (battleManager == null)
         {
             battleManager = new GameObject("BattleManager").AddComponent<BattleManager>();
@@ -36,4 +40,8 @@ public class GameManager : MonoBehaviour
 
 
     //Save Battle Managerwhen application Quit
+    private void OnApplicationQuit()
+    {
+        saveManager.SaveData();
+    }
 }
