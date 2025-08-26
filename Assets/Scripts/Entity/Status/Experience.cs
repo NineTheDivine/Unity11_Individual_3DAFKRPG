@@ -6,6 +6,12 @@ using UnityEngine;
 [CreateAssetMenu (fileName = "Experience", menuName = "ScriptableObject/Status/Experience")]
 public class Experience : Status
 {
+    public override void Init()
+    {
+        curValue = 0;
+        originalValue = maxValue;
+    }
+
     public override void AddValue(int value)
     {
         curValue += value;

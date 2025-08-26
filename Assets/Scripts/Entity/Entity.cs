@@ -6,10 +6,30 @@ public abstract class Entity : MonoBehaviour
 {
     [Header("Status")]
     public Status health;
+    public bool isDead = false;
+    [SerializeField] protected int originalAtk = 5;
+    virtual public int curAtk { get { return originalAtk; } }
 
     protected virtual void Start()
     {
         health.Init();
+        isDead = false;
+    }
+
+    public void ApplyDamage(Entity target, int damage)
+    {
+        if (target.isDead)
+            return;
+        target.TakeDamage(damage);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isDead)
+            return;
+        health.SubValue(damage);
+        if (health.curValue <= 0)
+            OnDead();
     }
 
     protected abstract void OnDead();

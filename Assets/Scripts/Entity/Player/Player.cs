@@ -8,10 +8,9 @@ public class Player : Entity
     public Experience experience;
 
     [Header("PlayerStats")]
-    [SerializeField] int originalAtk = 5;
-    [SerializeField] public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
     public int level = 1;
     public int gold = 0;
+    override public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
 
     [Header("Inventory")]
     public Inventory inventory;
@@ -28,13 +27,13 @@ public class Player : Entity
     {
         base.Start();
         this.mana.Init();
+        this.experience.Init();
         //Refresh Skill Colltime and info
     }
 
     protected override void OnDead()
     {
-        this.health.Init();
-        this.mana.Init();
+        isDead = true;
         //Refresh Skill Cooltime and info
 
         //Retry Battle

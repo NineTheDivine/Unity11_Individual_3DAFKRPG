@@ -11,11 +11,11 @@ public class Status: ScriptableObject
     [SerializeField] protected int minValue;
     [SerializeField] protected int maxValue;
     public int MaxValue { get { return maxValue; } }
-    public int originalValue { get; private set; }
+    public int originalValue { get; protected set; }
     protected List<Action<float>> EventActions = new List<Action<float>> ();
     public int curValue;
 
-    public void Init()
+    public virtual void Init()
     {
         curValue = maxValue;
         originalValue = maxValue;
