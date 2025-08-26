@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusUI : MonoBehaviour
 {
-    [SerializeField] BarTypeUI hpBar;
-    [SerializeField] BarTypeUI mpBar;
-    [SerializeField] SkillButton[] skillButtons = new SkillButton[4];
+    [SerializeField] public BaseBarTypeUI hpBar;
+    [SerializeField] public BaseBarTypeUI mpBar;
+    [SerializeField] public SkillButton[] skillButtons = new SkillButton[4];
 }

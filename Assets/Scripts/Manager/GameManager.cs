@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager _instance;
-    public GameManager Instance { get { return _instance; } }
-    BattleManager battleManager;
-    PlayerUIManager playerUIManager;
-    SaveManager saveManager;
+    static private GameManager _instance;
+    static public GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new GameObject("GameManager").AddComponent<GameManager>();
+            return _instance;
+        }
+    }
+    public BattleManager battleManager;
+    public PlayerUIManager playerUIManager;
+    public SaveManager saveManager;
 
     private void Awake()
     {
-        battleManager = BattleManager.Instance;
-        playerUIManager = playerUIManager.Instance;
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if(_instance != this)
+            Destroy(gameObject);
+        //Try Load Battle Manager, if not, make one
+        if (battleManager == null)
+        {
+            battleManager = new GameObject("BattleManager").AddComponent<BattleManager>();
+        }
     }
+
+
+    //Save Battle Managerwhen application Quit
 }

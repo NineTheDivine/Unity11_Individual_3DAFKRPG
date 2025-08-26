@@ -4,29 +4,14 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    static private BattleManager _instance;
-    static public BattleManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new GameObject("BattleManager").AddComponent<BattleManager>();
-            return _instance;
-        }
-    }
-
     public Player player;
     public Enemy enemy;
 
+    public int stage = 1;
+
     private void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-            Destroy(gameObject);
+        GameManager.Instance.battleManager = this;
     }
 
 }

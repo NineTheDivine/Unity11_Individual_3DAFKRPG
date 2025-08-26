@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InfoUI : MonoBehaviour
 {
-    [SerializeField] BarTypeUI experienceBar;
-    [SerializeField] CountTypeUI goldCount;
-    [SerializeField] CountTypeUI stageCount;
+    [SerializeField] public BaseBarTypeUI experienceBar;
+    [SerializeField] public CountTypeUI goldCount;
+    [SerializeField] public CountTypeUI stageCount;
 }

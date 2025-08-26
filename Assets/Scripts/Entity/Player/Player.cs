@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    [Header("PlayerStatus")]
     public Status mana;
+    public Experience experience;
+
+    [Header("PlayerStats")]
+    [SerializeField] int originalAtk = 5;
+    [SerializeField] public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
+    public int level = 1;
+    public int gold = 0;
 
     [Header("Inventory")]
     public Inventory inventory;
@@ -15,7 +21,7 @@ public class Player : Entity
 
     private void Awake()
     {
-        BattleManager.Instance.player = this;
+        GameManager.Instance.battleManager.player = this;
     }
 
     protected override void Start()
@@ -34,4 +40,11 @@ public class Player : Entity
         //Retry Battle
     }
 
+    public void LevelUp()
+    {
+        level++;
+        health.UpdateMaxValue(health.originalValue + (int)(health.originalValue * 0.1f * (level - 1)));
+        mana.UpdateMaxValue(mana.originalValue + (int)(mana.originalValue * 0.05f * (level - 1)));
+        experience.UpdateMaxValue(experience.originalValue + (int)(experience.originalValue * (level - 1) * (level - 1)));
+    }
 }

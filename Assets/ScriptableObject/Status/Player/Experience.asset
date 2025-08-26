@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d6a9c9ff4a8a64f80cfd4a5836fdcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c599092e50cc2428f8de60a468418d, type: 3}
   m_Name: Experience
   m_EditorClassIdentifier: 
   minValue: 0
-  maxValue: 0
+  maxValue: 100
   curValue: 0

@@ -1,26 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu (fileName = "Status", menuName = "ScriptableObject/Status")]
+[CreateAssetMenu (fileName = "Status", menuName = "ScriptableObject/Status/Base")]
 public class Status: ScriptableObject 
 { 
-    [SerializeField] int minValue;
-    [SerializeField] int maxValue;
-    List<Action<float>> EventActions = new List<Action<float>> ();
+    [SerializeField] protected int minValue;
+    [SerializeField] protected int maxValue;
+    public int MaxValue { get { return maxValue; } }
+    public int originalValue { get; private set; }
+    protected List<Action<float>> EventActions = new List<Action<float>> ();
     public int curValue;
 
     public void Init()
     {
         curValue = maxValue;
+        originalValue = maxValue;
     }
 
-    public void AddValue(int value)
+    public virtual void AddValue(int value)
     {
         curValue = Mathf.Min(curValue + value, maxValue);
-        for(int i = 0; i < EventActions.Count; i++)
+        for (int i = 0; i < EventActions.Count; i++)
             EventActions[i]((float)curValue / maxValue);
     }
 
@@ -35,5 +39,17 @@ public class Status: ScriptableObject
     {
         if(!EventActions.Contains(action))
             EventActions.Add(action);
+    }
+
+    public virtual void UpdateMaxValue(int newValue)
+    {
+        curValue += newValue - maxValue;
+        maxValue = newValue;
+    }
+
+    private void OnDestroy()
+    {
+        maxValue = originalValue;
+        curValue = 0;
     }
 }
