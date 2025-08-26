@@ -26,6 +26,6 @@ public class BaseBarTypeUI : MonoBehaviour
     
     virtual public void SetFill(int curValue, int maxValue)
     {
-        fillImage.fillAmount = (float)curValue / maxValue;
+        fillImage.fillAmount = Mathf.Clamp((float)curValue / maxValue, 0, 1);
     }
 }

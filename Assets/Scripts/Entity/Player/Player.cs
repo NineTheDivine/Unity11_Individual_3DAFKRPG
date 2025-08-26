@@ -25,11 +25,11 @@ public class Player : Entity
 
     protected override void Start()
     {
-        UpdateStatusByLevel();
         base.Start();
         this.mana.Init();
-        this.experience.Init();
+        UpdateStatusByLevel();
         AddGold();
+        GameManager.Instance.playerUIManager.infoUI.experienceBar.textSetter.SetText(level);
         //Refresh Skill Colltime and info
     }
 
@@ -44,6 +44,7 @@ public class Player : Entity
     public void LevelUp()
     {
         level++;
+        GameManager.Instance.playerUIManager.infoUI.experienceBar.textSetter.SetText(level);
         UpdateStatusByLevel();
     }
 
