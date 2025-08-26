@@ -12,40 +12,48 @@ public class Status: ScriptableObject
     [SerializeField] protected int maxValue;
     public int MaxValue { get { return maxValue; } }
     public int originalValue { get; protected set; }
-    protected List<Action<float>> EventActions = new List<Action<float>> ();
+    protected List<Action<int, int>> EventActions = new List<Action<int, int>> ();
     public int curValue;
 
     public virtual void Init()
     {
         curValue = maxValue;
         originalValue = maxValue;
+        InvokeActions();
     }
 
     public virtual void AddValue(int value)
     {
         curValue = Mathf.Min(curValue + value, maxValue);
-        for (int i = 0; i < EventActions.Count; i++)
-            EventActions[i]((float)curValue / maxValue);
+        InvokeActions();
     }
 
     public void SubValue(int value)
     {
         curValue = Mathf.Max(minValue, curValue - value);
-        for (int i = 0; i < EventActions.Count; i++)
-            EventActions[i]((float)curValue / maxValue);
+        InvokeActions();
     }
 
-    public void AddAction(Action<float> action)
+    public void AddAction(Action<int, int> action)
     {
         if(!EventActions.Contains(action))
             EventActions.Add(action);
     }
 
+
     public virtual void UpdateMaxValue(int newValue)
     {
         curValue += newValue - maxValue;
         maxValue = newValue;
+        InvokeActions();
     }
+
+    public void InvokeActions()
+    {
+        for (int i = 0; i < EventActions.Count; i++)
+            EventActions[i](curValue, maxValue);
+    }
+
 
     private void OnDestroy()
     {

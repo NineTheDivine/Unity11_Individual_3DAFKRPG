@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a223de09cc3a91b498d43daeaae217a0, type: 3}
-  m_Name: PlayerAIData
+  m_Name: TestEnemyAiData
   m_EditorClassIdentifier: 
-  moveAmount: 5
-  detectRadius: 1.5
-  attackDelay: 1
+  moveAmount: 0
+  detectRadius: 5
+  attackDelay: 4
   lastAttackTime: 0
-  initialState: 1
+  initialState: 0

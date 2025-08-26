@@ -27,6 +27,7 @@ public abstract class Entity : MonoBehaviour
     {
         if (isDead)
             return;
+        Debug.Log(this.name + "이 피해 " + damage.ToString() + " 입음");
         health.SubValue(damage);
         if (health.curValue <= 0)
             OnDead();

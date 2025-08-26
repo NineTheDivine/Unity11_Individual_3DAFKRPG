@@ -28,6 +28,7 @@ public class Player : Entity
         base.Start();
         this.mana.Init();
         this.experience.Init();
+        AddGold();
         //Refresh Skill Colltime and info
     }
 
@@ -45,5 +46,14 @@ public class Player : Entity
         health.UpdateMaxValue(health.originalValue + (int)(health.originalValue * 0.1f * (level - 1)));
         mana.UpdateMaxValue(mana.originalValue + (int)(mana.originalValue * 0.05f * (level - 1)));
         experience.UpdateMaxValue(experience.originalValue + (int)(experience.originalValue * (level - 1) * (level - 1)));
+    }
+
+    public bool AddGold(int value = 0)
+    {
+        if (gold + value < 0)
+            return false;
+        gold += value;
+        GameManager.Instance.playerUIManager.infoUI.goldCount.SetText(gold);
+        return true;
     }
 }

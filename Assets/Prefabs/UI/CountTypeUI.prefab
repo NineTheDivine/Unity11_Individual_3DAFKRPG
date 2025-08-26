@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 239621236551206894}
-  - component: {fileID: 7095126105313532992}
+  - component: {fileID: 3823780275819939704}
   m_Layer: 5
   m_Name: CountTypeUI
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7095126105313532992
+--- !u!114 &3823780275819939704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3791895619632054963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40c140f20bf6749439f956b14db8c9a3, type: 3}
+  m_Script: {fileID: 11500000, guid: ebdde9c6c402c13439bcf00de2c7b239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoText: {fileID: 6765403654238953968}
+  textbox: {fileID: 6765403654238953968}
+  placeHolderText: 
+  isPlaceHolderBack: 0
 --- !u!1 &6356098722029097529
 GameObject:
   m_ObjectHideFlags: 0

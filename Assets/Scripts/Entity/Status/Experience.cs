@@ -10,6 +10,7 @@ public class Experience : Status
     {
         curValue = 0;
         originalValue = maxValue;
+        InvokeActions();
     }
 
     public override void AddValue(int value)
@@ -19,13 +20,13 @@ public class Experience : Status
         {
             GameManager.Instance.battleManager.player.LevelUp();
         }
-        for (int i = 0; i < EventActions.Count; i++)
-            EventActions[i]((float)curValue / maxValue);
+        InvokeActions();
     }
 
     public override void UpdateMaxValue(int newValue)
     {
         curValue -= maxValue;
         maxValue = newValue;
+        InvokeActions ();
     }
 }

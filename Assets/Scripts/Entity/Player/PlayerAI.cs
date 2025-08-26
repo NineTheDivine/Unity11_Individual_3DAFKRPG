@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerAI : EntityAI
 {
-    [SerializeField] LayerMask enemyLayer;
+    Enemy enemy;
     protected override void Init()
     {
         //transform.position = GameManager.Instance.battleManager.Map.SpawnPosition
         currentState = entityAIData.initialState;
         transform.position = new Vector3(0, 1, 6);
+        enemy = GameManager.Instance.battleManager.enemy;
     }
 
     protected override void Update()
@@ -17,10 +18,8 @@ public class PlayerAI : EntityAI
         if (this.currentState == EntityAIState.Move)
         {
             transform.Translate(moveAmount * Time.deltaTime * transform.right);
-            if (Physics.Raycast(transform.position, transform.right, detectRadius, enemyLayer))
-            {
+            if (!entity.isDead && Vector3.Distance(transform.position, enemy.transform.position) <= detectRadius)
                 currentState = EntityAIState.Attack;
-            }
         }
 
         else if (this.currentState == EntityAIState.Attack)
@@ -31,8 +30,6 @@ public class PlayerAI : EntityAI
 
             else if (Time.time - lastAttackTime >= attackDelay)
             {
-                Debug.Log("Attack");
-
                 lastAttackTime = Time.time;
                 entity.ApplyDamage(enemy, entity.curAtk);
             }

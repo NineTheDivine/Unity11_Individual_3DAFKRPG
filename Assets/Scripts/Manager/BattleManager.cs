@@ -14,4 +14,9 @@ public class BattleManager : MonoBehaviour
         GameManager.Instance.battleManager = this;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.playerUIManager.infoUI.stageCount.SetText(stage);
+    }
+
 }

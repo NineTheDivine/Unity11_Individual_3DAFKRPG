@@ -21,7 +21,7 @@ public abstract class EntityAI : MonoBehaviour
 
     public EntityAIState currentState;
 
-    private void Awake()
+    protected void Awake()
     {
         if (entityAIData != null)
         {
