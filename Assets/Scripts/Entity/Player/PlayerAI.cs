@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAI : EntityAI
 {
     Enemy enemy;
-    protected override void Init()
+    public override void Init()
     {
         //transform.position = GameManager.Instance.battleManager.Map.SpawnPosition
         currentState = entityAIData.initialState;
@@ -15,6 +15,13 @@ public class PlayerAI : EntityAI
 
     protected override void Update()
     {
+        if (currentState == EntityAIState.End)
+            return;
+
+        if (entity.isDead)
+            this.currentState = EntityAIState.End;
+
+
         if (this.currentState == EntityAIState.Move)
         {
             transform.Translate(moveAmount * Time.deltaTime * transform.right);
@@ -25,7 +32,7 @@ public class PlayerAI : EntityAI
         else if (this.currentState == EntityAIState.Attack)
         {
             Enemy enemy = GameManager.Instance.battleManager.enemy;
-            if (enemy == null)
+            if (enemy.isDead)
                 currentState = EntityAIState.End;
 
             else if (Time.time - lastAttackTime >= attackDelay)
@@ -34,28 +41,5 @@ public class PlayerAI : EntityAI
                 entity.ApplyDamage(enemy, entity.curAtk);
             }
         }
-
-        //Collect Items and Reload Stage Later
-        else if (this.currentState == EntityAIState.End)
-        {
-            currentState = EntityAIState.None;
-            if (entity.isDead)
-                StartCoroutine(FailStage());
-            else
-                StartCoroutine(ClearStage());
-        }
-    }
-
-    private IEnumerator ClearStage()
-    {
-        //Collect Enemy Drops
-        yield return new WaitForSeconds(3.0f);
-        //Reload Stage
-    }
-
-    private IEnumerator FailStage()
-    {
-        yield return new WaitForSeconds(3.0f);
-        //Reload Stage
     }
 }

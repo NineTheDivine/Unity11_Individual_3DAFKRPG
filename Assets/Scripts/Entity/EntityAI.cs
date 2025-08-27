@@ -38,6 +38,6 @@ public abstract class EntityAI : MonoBehaviour
     {
         Init();
     }
-    abstract protected void Init();
+    abstract public void Init();
     abstract protected void Update();
 }

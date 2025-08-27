@@ -10,6 +10,7 @@ public class BaseBarTypeUI : MonoBehaviour
     [SerializeField] protected Status[] eventStatus;
     [SerializeField] protected Image fillImage;
     [SerializeField] public ITextSetter textSetter;
+    [SerializeField] bool AddTextSetterInActions = true;
 
     public void Awake()
     {
@@ -17,7 +18,7 @@ public class BaseBarTypeUI : MonoBehaviour
         for (int i = 0; i < eventStatus.Length; i++)
         {
             eventStatus[i].AddAction(SetFill);
-            if (textSetter != null)
+            if (textSetter != null && AddTextSetterInActions)
             {
                 eventStatus[i].AddAction(textSetter.SetText);
             }

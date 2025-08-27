@@ -12,12 +12,13 @@ public class Experience : Status
         originalValue = maxValue;
         InvokeActions();
     }
-
+    
     public override void AddValue(int value)
     {
         curValue += value;
-        while (curValue > maxValue)
+        while (curValue >= maxValue)
         {
+            curValue = curValue - maxValue;
             GameManager.Instance.battleManager.player.LevelUp();
         }
         InvokeActions();
@@ -25,7 +26,6 @@ public class Experience : Status
 
     public override void UpdateMaxValue(int newValue)
     {
-        curValue -= maxValue;
         maxValue = newValue;
         InvokeActions ();
     }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
+    [Header("EntitySpriteAnimator")]
+    [SerializeField] protected EntityAnimator entityAnimator;
+
     [Header("Status")]
     public Status health;
     public bool isDead = false;
@@ -31,6 +34,8 @@ public abstract class Entity : MonoBehaviour
         health.SubValue(damage);
         if (health.curValue <= 0)
             OnDead();
+        else
+            entityAnimator.OnDamagedApplied();
     }
 
     protected abstract void OnDead();

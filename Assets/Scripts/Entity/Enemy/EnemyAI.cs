@@ -7,7 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class EnemyAI : EntityAI
 {
     Player player;
-    protected override void Init()
+    public override void Init()
     {
         //transform.position = GameManager.Instance.battleManager.Map.SpawnPosition
         currentState = entityAIData.initialState;
@@ -17,7 +17,12 @@ public class EnemyAI : EntityAI
 
     protected override void Update()
     {
-        if (!entity.isDead && (currentState == EntityAIState.None || currentState == EntityAIState.Move)
+        if (currentState == EntityAIState.End)
+            return;
+
+        if (entity.isDead)
+            this.currentState = EntityAIState.End;
+        else if ((currentState == EntityAIState.None || currentState == EntityAIState.Move)
             && Vector3.Distance(transform.position, player.transform.position) <= detectRadius)
             currentState = EntityAIState.Attack;
 
@@ -29,7 +34,7 @@ public class EnemyAI : EntityAI
         else if (this.currentState == EntityAIState.Attack)
         {
             Player player = GameManager.Instance.battleManager.player;
-            if (player == null)
+            if (player.isDead)
                 currentState = EntityAIState.End;
 
             else if (Time.time - lastAttackTime >= attackDelay)

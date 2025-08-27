@@ -27,6 +27,7 @@ public class Player : Entity
     {
         base.Start();
         this.mana.Init();
+        this.experience.Init();
         UpdateStatusByLevel();
         AddGold();
         GameManager.Instance.playerUIManager.infoUI.experienceBar.textSetter.SetText(level);
@@ -36,9 +37,8 @@ public class Player : Entity
     protected override void OnDead()
     {
         isDead = true;
-        //Refresh Skill Cooltime and info
-
-        //Retry Battle
+        entityAnimator.OnDeadApplied();
+        GameManager.Instance.battleManager.EndStage(false);
     }
 
     public void LevelUp()
@@ -62,5 +62,14 @@ public class Player : Entity
         gold += value;
         GameManager.Instance.playerUIManager.infoUI.goldCount.SetText(gold);
         return true;
+    }
+
+    public void OnResetStage()
+    {
+        health.Init();
+        mana.Init();
+        entityAnimator.OnReset();
+        isDead = false;
+        GetComponent<PlayerAI>().Init();
     }
 }
