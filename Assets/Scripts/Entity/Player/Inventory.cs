@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void AddItems(List<Item> items)
     {
-        
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (!TryAddItem(items[i]))
+                Debug.Log("인벤토리가 가득 찼습니다.");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool TryAddItem(Item item)
     {
-        
+
+
+        //if inventory is full,  return false
+        return false;
     }
 }

@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BaseBarTypeUI : MonoBehaviour
 {
+    [SerializeField] protected Status[] eventStatus;
     [SerializeField] protected Image fillImage;
-    [SerializeField] protected TextMeshProUGUI infoText;
+    [SerializeField] public ITextSetter textSetter;
+    [SerializeField] bool AddTextSetterInActions = true;
 
-    virtual public void SetText(string s)
+    public void Awake()
     {
-        infoText.text = s;
+        textSetter = this.GetComponent<ITextSetter>();
+        for (int i = 0; i < eventStatus.Length; i++)
+        {
+            eventStatus[i].AddAction(SetFill);
+            if (textSetter != null && AddTextSetterInActions)
+            {
+                eventStatus[i].AddAction(textSetter.SetText);
+            }
+        }
     }
     
-    
-    virtual public void SetFill(float rate)
+    virtual public void SetFill(int curValue, int maxValue)
     {
-        fillImage.fillAmount = rate;
+        fillImage.fillAmount = Mathf.Clamp((float)curValue / maxValue, 0, 1);
     }
 }

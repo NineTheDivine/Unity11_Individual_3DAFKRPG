@@ -8,10 +8,9 @@ public class Player : Entity
     public Experience experience;
 
     [Header("PlayerStats")]
-    [SerializeField] int originalAtk = 5;
-    [SerializeField] public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
     public int level = 1;
     public int gold = 0;
+    override public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
 
     [Header("Inventory")]
     public Inventory inventory;
@@ -28,23 +27,49 @@ public class Player : Entity
     {
         base.Start();
         this.mana.Init();
+        this.experience.Init();
+        UpdateStatusByLevel();
+        AddGold();
+        GameManager.Instance.playerUIManager.infoUI.experienceBar.textSetter.SetText(level);
         //Refresh Skill Colltime and info
     }
 
     protected override void OnDead()
     {
-        this.health.Init();
-        this.mana.Init();
-        //Refresh Skill Cooltime and info
-
-        //Retry Battle
+        isDead = true;
+        entityAnimator.OnDeadApplied();
+        GameManager.Instance.battleManager.EndStage(false);
     }
 
     public void LevelUp()
     {
         level++;
+        GameManager.Instance.playerUIManager.infoUI.experienceBar.textSetter.SetText(level);
+        UpdateStatusByLevel();
+    }
+
+    public void UpdateStatusByLevel()
+    {
         health.UpdateMaxValue(health.originalValue + (int)(health.originalValue * 0.1f * (level - 1)));
         mana.UpdateMaxValue(mana.originalValue + (int)(mana.originalValue * 0.05f * (level - 1)));
         experience.UpdateMaxValue(experience.originalValue + (int)(experience.originalValue * (level - 1) * (level - 1)));
+    }
+
+    public bool AddGold(int value = 0)
+    {
+        if (gold + value < 0)
+            return false;
+        gold += value;
+        GameManager.Instance.playerUIManager.infoUI.goldCount.SetText(gold);
+        return true;
+    }
+
+    public void OnResetStage()
+    {
+        health.Init();
+        mana.Init();
+        entityAnimator.OnReset();
+        isDead = false;
+        GetComponent<PlayerAI>().Init();
     }
 }
