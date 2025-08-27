@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
+    protected BuffManager buffManager;
+
     [Header("EntitySpriteAnimator")]
     [SerializeField] protected EntityAnimator entityAnimator;
 
@@ -15,6 +17,7 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
+        buffManager = GameManager.Instance.battleManager.buffManager;
         health.Init();
         isDead = false;
     }

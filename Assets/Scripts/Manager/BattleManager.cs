@@ -7,11 +7,18 @@ public class BattleManager : MonoBehaviour
     public Player player;
     public Enemy enemy;
 
+    public BuffManager buffManager;
+
     public int stage = 1;
 
     private void Awake()
     {
         GameManager.Instance.battleManager = this;
+        if (buffManager == null)
+        {
+            buffManager = new GameObject("BuffManager").AddComponent<BuffManager>();
+            buffManager.transform.SetParent(transform);
+        }
     }
 
     private void Start()

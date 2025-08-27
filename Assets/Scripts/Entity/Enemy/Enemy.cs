@@ -14,9 +14,13 @@ public class Enemy : Entity
 {
     [Header("EnemyDrop")]
     [SerializeField] int dropGold;
-    public int DropGold { get { return dropGold; } }
+    public int DropGold { get { 
+            return (int)(dropGold * (1.0f + ((buffManager.CurrentBuff.TryGetValue(BuffType.Gold, out float value)) ? value : 0.0f))); 
+        } }
     [SerializeField] int dropExp;
-    public int DropExp { get { return dropExp; } }
+    public int DropExp { get {
+            return (int)(dropExp * (1.0f + ((buffManager.CurrentBuff.TryGetValue(BuffType.Exp, out float value)) ? value : 0.0f)));
+        } }
     [SerializeField] List<ItemDrop> DropPool = new List<ItemDrop>();
 
     private void Awake()

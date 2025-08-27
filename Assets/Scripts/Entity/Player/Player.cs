@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Entity
@@ -10,7 +11,12 @@ public class Player : Entity
     [Header("PlayerStats")]
     public int level = 1;
     public int gold = 0;
-    override public int curAtk { get { return (int)(originalAtk * (1 + (level - 1) * 0.5f)); } }
+    override public int curAtk { get 
+        {
+            int levelAtk = (int)(originalAtk * (1 + (level - 1) * 0.5f));
+            return (int)(levelAtk * ((1.0f + (buffManager.CurrentBuff.TryGetValue(BuffType.Atk, out float value) ? value : 0.0f)))); 
+        }
+    }
 
     [Header("Inventory")]
     public Inventory inventory;

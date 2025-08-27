@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerAI : EntityAI
 {
     Enemy enemy;
+    BuffManager buffManager;
     public override void Init()
     {
         //transform.position = GameManager.Instance.battleManager.Map.SpawnPosition
         currentState = entityAIData.initialState;
         transform.position = new Vector3(0, 1, 6);
         enemy = GameManager.Instance.battleManager.enemy;
+        buffManager = GameManager.Instance.battleManager.buffManager;
     }
 
     protected override void Update()
