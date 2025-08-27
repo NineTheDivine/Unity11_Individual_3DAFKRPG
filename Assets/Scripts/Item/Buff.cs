@@ -19,28 +19,13 @@ public class BuffInfo
     public float durationSeconds;
 }
 
-public class Buff : MonoBehaviour
+public class Buff : MonoBehaviour, IUseable
 {
     [SerializeField] protected BuffInfo buffInformation;
     public BuffInfo BuffInformation { get { return buffInformation; } }
 
     float remainingtime;
     //Image image;
-
-
-    public void ApplyBuff()
-    {
-        remainingtime = buffInformation.durationSeconds;
-        if (GameManager.Instance.battleManager.buffManager.BuffHashSet.Contains(this))
-        {
-            remainingtime = buffInformation.durationSeconds;
-            return;
-        }
-
-        GameManager.Instance.battleManager.buffManager.ApplyBuff(this);
-        this.StartCoroutine(EndBuff());
-        
-    }
 
     private IEnumerator EndBuff()
     {
@@ -53,5 +38,19 @@ public class Buff : MonoBehaviour
         }
         Debug.Log("Buff End");
         GameManager.Instance.battleManager.buffManager.RemoveBuff(this);
+    }
+
+    public void OnUse()
+    {
+        remainingtime = buffInformation.durationSeconds;
+        if (GameManager.Instance.battleManager.buffManager.BuffHashSet.Contains(this))
+        {
+            remainingtime = buffInformation.durationSeconds;
+            return;
+        }
+
+        GameManager.Instance.battleManager.buffManager.ApplyBuff(this);
+        this.StartCoroutine(EndBuff());
+
     }
 }
